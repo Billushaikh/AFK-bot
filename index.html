@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AFK Bot — Monitor</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<main class="monitor">
+
+  <header class="monitor__header">
+    <div class="monitor__title">
+      <span class="monitor__dot" id="statusDot"></span>
+      <h1>afk<span class="accent">_</span>bot</h1>
+    </div>
+    <p class="monitor__subtitle" id="statusText">idle — not running</p>
+  </header>
+
+  <section class="trace" aria-hidden="true">
+    <div class="trace__track" id="traceTrack">
+      <svg class="trace__svg" viewBox="0 0 600 80" preserveAspectRatio="none">
+        <polyline points="0,40 60,40 80,40 90,10 100,70 110,20 120,40 180,40 240,40 260,40 270,10 280,70 290,20 300,40 360,40 420,40 440,40 450,10 460,70 470,20 480,40 540,40 600,40" />
+      </svg>
+      <svg class="trace__svg" viewBox="0 0 600 80" preserveAspectRatio="none">
+        <polyline points="0,40 60,40 80,40 90,10 100,70 110,20 120,40 180,40 240,40 260,40 270,10 280,70 290,20 300,40 360,40 420,40 440,40 450,10 460,70 470,20 480,40 540,40 600,40" />
+      </svg>
+    </div>
+  </section>
+
+  <section class="readout">
+    <div class="readout__cell">
+      <span class="readout__label">moves</span>
+      <span class="readout__value" id="movesValue">0</span>
+    </div>
+    <div class="readout__cell">
+      <span class="readout__label">runtime</span>
+      <span class="readout__value" id="runtimeValue">00:00:00</span>
+    </div>
+    <div class="readout__cell">
+      <span class="readout__label">last position</span>
+      <span class="readout__value" id="positionValue">—</span>
+    </div>
+  </section>
+
+  <section class="config">
+    <div class="config__row">
+      <label for="interval">interval (sec)</label>
+      <input type="number" id="interval" value="2.0" min="0.1" step="0.1">
+    </div>
+    <div class="config__row config__row--pair">
+      <label>x range</label>
+      <div class="config__pair">
+        <input type="number" id="xMin" value="600">
+        <span>–</span>
+        <input type="number" id="xMax" value="700">
+      </div>
+    </div>
+    <div class="config__row config__row--pair">
+      <label>y range</label>
+      <div class="config__pair">
+        <input type="number" id="yMin" value="200">
+        <span>–</span>
+        <input type="number" id="yMax" value="600">
+      </div>
+    </div>
+  </section>
+
+  {% if not pyautogui_available %}
+  <p class="warning">pyautogui is not installed on the server. Run <code>pip install pyautogui</code> and restart.</p>
+  {% endif %}
+
+  <p class="errorMsg" id="errorMsg"></p>
+
+  <section class="commands">
+    <button class="cmd cmd--start" id="startBtn">$ start</button>
+    <button class="cmd cmd--stop" id="stopBtn" disabled>$ stop</button>
+  </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
